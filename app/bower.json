@@ -1,0 +1,17 @@
+{
+  "name": "dict",
+  "version": "0.0.1",
+  "authors": [
+    "Tim Green <iamtimgreen@gmail.com>"
+  ],
+  "keywords": [
+    "dict"
+  ],
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "closure-library": "*",
+    "angular": "1.2.6",
+    "less": "~1.6.0"
+  }
+}
