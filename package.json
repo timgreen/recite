@@ -1,10 +1,14 @@
 {
   "name": "dict",
   "version": "0.0.1",
-  "description": "",
+  "description": "dict app",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/timgreen/dict.git"
   },
   "keywords": [
     "dict"
@@ -13,6 +17,7 @@
   "license": "ISC",
   "devDependencies": {
     "grunt": "~0.4.2",
-    "grunt-haml": "~0.8.0"
+    "grunt-haml": "~0.8.0",
+    "grunt-closure-tools": "~0.9.0"
   }
 }
