@@ -1,11 +1,11 @@
 {
-  "name": "dict",
+  "name": "recite",
   "version": "0.0.1",
   "authors": [
     "Tim Green <iamtimgreen@gmail.com>"
   ],
   "keywords": [
-    "dict"
+    "recite"
   ],
   "license": "MIT",
   "private": true,

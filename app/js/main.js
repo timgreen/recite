@@ -1,6 +1,8 @@
-goog.provide('dict.App');
+goog.provide('recite.App');
 
-dict.App.main = function() {
+goog.require('goog.string');
+
+recite.App.main = function() {
   console.log('hello dict');
 };
-goog.exportSymbol('dict.App.main', dict.App.main);
+goog.exportSymbol('recite.App.main', recite.App.main);

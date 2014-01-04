@@ -5,11 +5,12 @@
   %body
     -# scripts
     %script(src="/assets/js/angular/angular.min.js")
+    %script(src="https://www.dropbox.com/static/api/dropbox-datastores-1.0-latest.js")
     - if (isDevMode) {
     %script(src="/assets/js/goog/base.js")
     %script(src="/deps.js")
     :javascript
-      goog.require('dict.App');
+      goog.require('recite.App');
     :javascript
-      dict.App.main();
+      recite.App.main();
     - }

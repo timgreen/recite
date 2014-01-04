@@ -85,7 +85,7 @@ module.exports = function(grunt) {
       app: {
         options: {
           inputs: 'app/js/main.js',
-          closure_entry_point: 'dict.App.main'
+          closure_entry_point: 'recite.App.main'
         },
         src: [
           'app/js/',

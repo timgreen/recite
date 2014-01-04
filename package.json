@@ -1,17 +1,17 @@
 {
-  "name": "dict",
+  "name": "recite",
   "version": "0.0.1",
-  "description": "dict app",
+  "description": "recite app",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/timgreen/dict.git"
+    "url": "https://github.com/timgreen/recite.git"
   },
   "keywords": [
-    "dict"
+    "recite"
   ],
   "author": "Tim Green <iamtimgreen@gmail.com>",
   "license": "ISC",
