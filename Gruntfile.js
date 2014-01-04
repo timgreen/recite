@@ -8,6 +8,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-closure-tools');
 
+  function bowerPath(filename) {
+    return 'tmp/bower_components/' + filename;
+  }
+
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -41,7 +45,7 @@ module.exports = function(grunt) {
       options: {
         depswriter: cTools.getPath('build/depswriter.py'),
         root_with_prefix: [
-          '"tmp/bower_components/closure-library/closure/goog/ ."',
+          '"' + bowerPath('closure-library/closure/goog/') + ' ."',
           '"app/js .."',
         ],
       },
@@ -60,8 +64,11 @@ module.exports = function(grunt) {
           warning_level: 'verbose',
           jscomp_off: ['checkTypes', 'fileoverviewTags'],
           summary_detail_level: 3,
-          output_wrapper: '(function(){%output%}).call(this);'
-        },
+          output_wrapper: '(function(){%output%}).call(this);',
+          externs: [
+            bowerPath('angular-latest/closure/angular.js')
+          ],
+        }
       },
       app: {
         options: {
@@ -70,8 +77,8 @@ module.exports = function(grunt) {
         },
         src: [
           'app/js/',
-          'tmp/bower_components/closure-library/closure/goog',
-          'tmp/bower_components/closure-library/third_party/closure/',
+          bowerPath('closure-library/closure/goog'),
+          bowerPath('closure-library/third_party/closure/')
         ],
         dest: 'dest/prod/assets/js/compiled.js'
       }
@@ -91,8 +98,8 @@ module.exports = function(grunt) {
         port: 9000,
         alias: [
           {route: '/', path: 'dest/dev/'},
-          {route: '/assets/js/angular/', path: 'tmp/bower_components/angular/'},
-          {route: '/assets/js/goog/', path: 'tmp/bower_components/closure-library/closure/goog/'},
+          {route: '/assets/js/angular/', path: bowerPath('angular/')},
+          {route: '/assets/js/goog/', path: bowerPath('closure-library/closure/goog/')},
           {route: '/assets/js/', path: 'app/js/'}
         ],
       }

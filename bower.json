@@ -11,7 +11,8 @@
   "private": true,
   "devDependencies": {
     "closure-library": "*",
-    "angular": "1.2.6",
-    "less": "~1.6.0"
+    "angular": "~1.2.7",
+    "less": "~1.6.0",
+    "angular-latest": "~1.2.7"
   }
 }
