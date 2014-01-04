@@ -3,6 +3,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-haml');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-concurrent');
+  grunt.loadNpmTasks('grunt-closure-tools');
 
   // Project configuration.
   grunt.initConfig({
@@ -33,10 +34,26 @@ module.exports = function(grunt) {
         }
       }
     },
+    closureDepsWriter: {
+      options: {
+        depswriter: 'app/bower_components/closure-library/closure/bin/build/depswriter.py',
+        root_with_prefix: [
+          '"app/bower_components/closure-library/closure/goog/ ."',
+          '"app/js .."',
+        ],
+      },
+      devDeps: {
+        dest: 'dest/dev/deps.js',
+      }
+    },
     watch: {
       devhaml: {
         files: 'app/view/**/*.haml',
         tasks: ['haml:dev']
+      },
+      depsjs: {
+        files: 'app/js/**/*.js',
+        tasks: ['closureDepsWriter']
       }
     },
     server: {
@@ -45,14 +62,15 @@ module.exports = function(grunt) {
         alias: [
           {route: '/', path: 'dest/dev/'},
           {route: '/assets/js/angular/', path: 'app/bower_components/angular/'},
-          {route: '/assets/js/goog/', path: 'app/bower_components/closure-library/closure/goog/'}
+          {route: '/assets/js/goog/', path: 'app/bower_components/closure-library/closure/goog/'},
+          {route: '/assets/js/', path: 'app/js/'}
         ],
       }
     },
     concurrent: {
       dev: {
-        tasks: ['server:dev', 'watch:devhaml'],
-        options: {logConcurrentOutput: true}
+        tasks: ['server:dev', 'watch:devhaml', 'watch:depsjs'],
+        options: {logConcurrentOutput: true, limit: 10}
       }
     }
   });

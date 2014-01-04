@@ -1,0 +1,15 @@
+!!! 5
+%html
+  %head
+
+  %body
+    -# scripts
+    %script(src="/assets/js/angular/angular.min.js")
+    - if (isDevMode) {
+    %script(src="/assets/js/goog/base.js")
+    %script(src="/deps.js")
+    :javascript
+      goog.require('dict.App');
+    :javascript
+      dict.App.main();
+    - }
