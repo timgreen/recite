@@ -1,5 +1,8 @@
 module.exports = function(grunt) {
 
+  var ssCompiler = require('superstartup-closure-compiler'),
+      cTools     = require('closure-tools');
+
   grunt.loadNpmTasks('grunt-haml');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-concurrent');
@@ -36,9 +39,9 @@ module.exports = function(grunt) {
     },
     closureDepsWriter: {
       options: {
-        depswriter: 'app/bower_components/closure-library/closure/bin/build/depswriter.py',
+        depswriter: cTools.getPath('build/depswriter.py'),
         root_with_prefix: [
-          '"app/bower_components/closure-library/closure/goog/ ."',
+          '"tmp/bower_components/closure-library/closure/goog/ ."',
           '"app/js .."',
         ],
       },
@@ -46,12 +49,39 @@ module.exports = function(grunt) {
         dest: 'dest/dev/deps.js',
       }
     },
+    closureBuilder: {
+      options: {
+        builder: cTools.getPath('build/closurebuilder.py'),
+        compilerFile: ssCompiler.getPathSS(),
+        compile: true,
+        compilerOpts: {
+          compilation_level: 'ADVANCED_OPTIMIZATIONS',
+          define: ['\'goog.DEBUG=false\''],
+          warning_level: 'verbose',
+          jscomp_off: ['checkTypes', 'fileoverviewTags'],
+          summary_detail_level: 3,
+          output_wrapper: '(function(){%output%}).call(this);'
+        },
+      },
+      app: {
+        options: {
+          inputs: 'app/js/main.js',
+          closure_entry_point: 'dict.App.main'
+        },
+        src: [
+          'app/js/',
+          'tmp/bower_components/closure-library/closure/goog',
+          'tmp/bower_components/closure-library/third_party/closure/',
+        ],
+        dest: 'dest/prod/assets/js/compiled.js'
+      }
+    },
     watch: {
-      devhaml: {
+      devHaml: {
         files: 'app/view/**/*.haml',
         tasks: ['haml:dev']
       },
-      depsjs: {
+      depsJs: {
         files: 'app/js/**/*.js',
         tasks: ['closureDepsWriter']
       }
@@ -61,15 +91,15 @@ module.exports = function(grunt) {
         port: 9000,
         alias: [
           {route: '/', path: 'dest/dev/'},
-          {route: '/assets/js/angular/', path: 'app/bower_components/angular/'},
-          {route: '/assets/js/goog/', path: 'app/bower_components/closure-library/closure/goog/'},
+          {route: '/assets/js/angular/', path: 'tmp/bower_components/angular/'},
+          {route: '/assets/js/goog/', path: 'tmp/bower_components/closure-library/closure/goog/'},
           {route: '/assets/js/', path: 'app/js/'}
         ],
       }
     },
     concurrent: {
       dev: {
-        tasks: ['server:dev', 'watch:devhaml', 'watch:depsjs'],
+        tasks: ['server:dev', 'watch:devHaml', 'watch:depsJs'],
         options: {logConcurrentOutput: true, limit: 10}
       }
     }
@@ -86,5 +116,5 @@ module.exports = function(grunt) {
     grunt.log.write('Server available on http://localhost:9000\nWaiting forever...\n');
   });
 
-  grunt.registerTask('dev', ['concurrent:dev']);
+  grunt.registerTask('dev', ['haml:dev', 'closureDepsWriter', 'concurrent:dev']);
 };
