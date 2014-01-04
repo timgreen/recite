@@ -79,6 +79,7 @@ module.exports = function(grunt) {
           summary_detail_level: 3,
           output_wrapper: '(function(){%output%}).call(this);',
           externs: [
+            'externs/dropbox.js',
             bowerPath('angular-latest/closure/angular.js')
           ],
         }
@@ -127,7 +128,10 @@ module.exports = function(grunt) {
       app:{
         closureLinterPath : '/usr/bin/',
         command: 'python2 node_modules/closure-linter-wrapper/tools/gjslint.py',
-        src: 'app/js/**/*.js',
+        src: [
+          'app/js/**/*.js',
+          'externs/dropbox.js',
+        ],
         options: {
           stdout: true,
           strict: true
@@ -138,7 +142,10 @@ module.exports = function(grunt) {
       app:{
         closureLinterPath : '/usr/bin/',
         command: 'python2 node_modules/closure-linter-wrapper/tools/fixjsstyle.py',
-        src: 'app/js/**/*.js',
+        src: [
+          'app/js/**/*.js',
+          'externs/dropbox.js',
+        ],
         options: {
           stdout: true,
           strict: true

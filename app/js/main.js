@@ -1,8 +1,16 @@
 goog.provide('recite.App');
 
-goog.require('goog.string');
+goog.require('recite.DropboxService');
 
+
+/**
+ * Entry point.
+ */
 recite.App.main = function() {
-  console.log('hello dict');
+  var dropbox = new recite.DropboxService();
+  console.log('oauth', dropbox.getClient().isAuthenticated());
+  if (!dropbox.getClient().isAuthenticated()) {
+    dropbox.getClient().authenticate();
+  }
 };
 goog.exportSymbol('recite.App.main', recite.App.main);
