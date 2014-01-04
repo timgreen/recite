@@ -1,6 +1,8 @@
 module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-haml');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-concurrent');
 
   // Project configuration.
   grunt.initConfig({
@@ -31,6 +33,12 @@ module.exports = function(grunt) {
         }
       }
     },
+    watch: {
+      devhaml: {
+        files: 'app/view/**/*.haml',
+        tasks: ['haml:dev']
+      }
+    },
     server: {
       dev: {
         port: 9000,
@@ -39,6 +47,12 @@ module.exports = function(grunt) {
           {route: '/assets/js/angular/', path: 'app/bower_components/angular/'},
           {route: '/assets/js/goog/', path: 'app/bower_components/closure-library/closure/goog/'}
         ],
+      }
+    },
+    concurrent: {
+      dev: {
+        tasks: ['server:dev', 'watch:devhaml'],
+        options: {logConcurrentOutput: true}
       }
     }
   });
@@ -53,4 +67,6 @@ module.exports = function(grunt) {
     app.listen(this.data.port);
     grunt.log.write('Server available on http://localhost:9000\nWaiting forever...\n');
   });
+
+  grunt.registerTask('dev', ['concurrent:dev']);
 };
