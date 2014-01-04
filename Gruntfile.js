@@ -3,6 +3,7 @@ module.exports = function(grunt) {
   var ssCompiler = require('superstartup-closure-compiler'),
       cTools     = require('closure-tools');
 
+  grunt.loadNpmTasks('grunt-closure-linter');
   grunt.loadNpmTasks('grunt-closure-tools');
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -120,6 +121,28 @@ module.exports = function(grunt) {
       dev: {
         tasks: ['server:dev', 'watch:devHaml', 'watch:depsJs'],
         options: {logConcurrentOutput: true, limit: 10}
+      }
+    },
+    closureLint: {
+      app:{
+        closureLinterPath : '/usr/bin/',
+        command: 'python2 node_modules/closure-linter-wrapper/tools/gjslint.py',
+        src: 'app/js/**/*.js',
+        options: {
+          stdout: true,
+          strict: true
+        }
+      }
+    },
+    closureFixStyle: {
+      app:{
+        closureLinterPath : '/usr/bin/',
+        command: 'python2 node_modules/closure-linter-wrapper/tools/fixjsstyle.py',
+        src: 'app/js/**/*.js',
+        options: {
+          stdout: true,
+          strict: true
+        }
       }
     }
   });
