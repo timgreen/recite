@@ -23,6 +23,7 @@
     "grunt-contrib-watch": "~0.5.3",
     "grunt-concurrent": "~0.4.2",
     "superstartup-closure-compiler": "~0.1.6",
-    "closure-tools": "~0.1.4"
+    "closure-tools": "~0.1.4",
+    "grunt-mkdir": "~0.1.1"
   }
 }

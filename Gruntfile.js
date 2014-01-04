@@ -3,21 +3,26 @@ module.exports = function(grunt) {
   var ssCompiler = require('superstartup-closure-compiler'),
       cTools     = require('closure-tools');
 
-  grunt.loadNpmTasks('grunt-haml');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-closure-tools');
+  grunt.loadNpmTasks('grunt-concurrent');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-haml');
+  grunt.loadNpmTasks('grunt-mkdir');
 
   function bowerPath(filename) {
     return 'tmp/bower_components/' + filename;
   }
+  function destPath(path) {
+    return 'tmp/dest/' + path;
+  }
+
 
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     haml: {
       dev: {
-        files: grunt.file.expandMapping(['app/view/**/*.haml'], 'dest/dev/', {
+        files: grunt.file.expandMapping(['app/view/**/*.haml'], destPath('dev/'), {
           rename: function(base, path) {
             return base + path.substr('app/view/'.length).replace(/\.haml$/, '.html');
           }
@@ -29,7 +34,7 @@ module.exports = function(grunt) {
         }
       },
       prod: {
-        files: grunt.file.expandMapping(['app/view/**/*.haml'], 'dest/prod/', {
+        files: grunt.file.expandMapping(['app/view/**/*.haml'], destPath('prod/'), {
           rename: function(base, path) {
             return base + path.substr('app/view/'.length).replace(/\.haml$/, '.html');
           }
@@ -41,6 +46,13 @@ module.exports = function(grunt) {
         }
       }
     },
+    mkdir: {
+      prod: {
+        options: {
+          create: [destPath('prod/assets/js')]
+        }
+      },
+    },
     closureDepsWriter: {
       options: {
         depswriter: cTools.getPath('build/depswriter.py'),
@@ -50,7 +62,7 @@ module.exports = function(grunt) {
         ],
       },
       devDeps: {
-        dest: 'dest/dev/deps.js',
+        dest: destPath('dev/deps.js'),
       }
     },
     closureBuilder: {
@@ -80,7 +92,7 @@ module.exports = function(grunt) {
           bowerPath('closure-library/closure/goog'),
           bowerPath('closure-library/third_party/closure/')
         ],
-        dest: 'dest/prod/assets/js/compiled.js'
+        dest: destPath('prod/assets/js/compiled.js')
       }
     },
     watch: {
@@ -97,7 +109,7 @@ module.exports = function(grunt) {
       dev: {
         port: 9000,
         alias: [
-          {route: '/', path: 'dest/dev/'},
+          {route: '/', path: destPath('dev')},
           {route: '/assets/js/angular/', path: bowerPath('angular/')},
           {route: '/assets/js/goog/', path: bowerPath('closure-library/closure/goog/')},
           {route: '/assets/js/', path: 'app/js/'}
@@ -123,5 +135,6 @@ module.exports = function(grunt) {
     grunt.log.write('Server available on http://localhost:9000\nWaiting forever...\n');
   });
 
+  grunt.registerTask('compileJs', ['mkdir:prod', 'closureBuilder']);
   grunt.registerTask('dev', ['haml:dev', 'closureDepsWriter', 'concurrent:dev']);
 };
