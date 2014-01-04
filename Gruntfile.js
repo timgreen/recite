@@ -127,7 +127,7 @@ module.exports = function(grunt) {
     closureLint: {
       app:{
         closureLinterPath : '/usr/bin/',
-        command: 'python2 node_modules/closure-linter-wrapper/tools/gjslint.py',
+        command: 'python2 node_modules/closure-linter-wrapper/tools/gjslint.py --max_line_length=100',
         src: [
           'app/js/**/*.js',
           'externs/dropbox.js',
@@ -167,4 +167,5 @@ module.exports = function(grunt) {
 
   grunt.registerTask('compileJs', ['mkdir:prod', 'closureBuilder']);
   grunt.registerTask('dev', ['haml:dev', 'closureDepsWriter', 'concurrent:dev']);
+  grunt.registerTask('test', ['haml', 'compileJs', 'closureLint']);
 };
