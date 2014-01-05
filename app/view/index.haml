@@ -1,11 +1,19 @@
 !!! 5
-%html
+%html(ng-app="recite")
   %head
 
   %body
     .add-word
       %input#add-word-input
       %button#add-word-btn Add word
+
+    .search-word(ng-controller="search.SearchCtrl")
+      %form(ng-submit="searchWord()")
+        %input(ng-model="searchWordInput" placeholder="word to search")
+        %input(type="submit" value="Search")
+        .x {{searchWordInput}}
+      .result
+
     -# scripts
     %script(src="/assets/js/angular/angular.min.js")
     %script(src="https://www.dropbox.com/static/api/dropbox-datastores-1.0-latest.js")

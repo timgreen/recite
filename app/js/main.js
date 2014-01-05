@@ -3,6 +3,7 @@ goog.provide('recite.App');
 goog.require('goog.dom');
 goog.require('goog.events');
 goog.require('recite.DropboxService');
+goog.require('recite.search.SearchCtrl');
 
 
 /**
@@ -23,5 +24,7 @@ recite.App.main = function() {
     console.log('add word', word);
   });
 
+  var module = angular.module('recite', []);
+  module.controller('search.SearchCtrl', recite.search.SearchCtrl);
 };
 goog.exportSymbol('recite.App.main', recite.App.main);
