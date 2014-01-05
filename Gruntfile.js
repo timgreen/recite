@@ -70,13 +70,25 @@ module.exports = function(grunt) {
     closureBuilder: {
       options: {
         builder: cTools.getPath('build/closurebuilder.py'),
-        compilerFile: ssCompiler.getPathSS(),
+        compilerFile: ssCompiler.getPath(),
         compile: true,
         compilerOpts: {
           compilation_level: 'ADVANCED_OPTIMIZATIONS',
           define: ['\'goog.DEBUG=false\''],
           warning_level: 'verbose',
-          jscomp_off: ['checkTypes', 'fileoverviewTags'],
+          jscomp_error: [
+            'checkRegExp',
+            'const',
+            'constantProperty',
+            'strictModuleDepCheck',
+          ],
+          jscomp_warning: [
+            'accessControls',
+            'visibility',
+          ],
+          jscomp_off: [
+            'fileoverviewTags',
+          ],
           summary_detail_level: 3,
           output_wrapper: '(function(){%output%}).call(this);',
           externs: [
