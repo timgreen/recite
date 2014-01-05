@@ -7,7 +7,7 @@ goog.provide('recite.DropboxService');
  */
 recite.DropboxService = function() {
   var DROPBOX_APP_KEY = 'whmi318p8xpr56a';
-  this.client_ = new Dropbox.Client({key: DROPBOX_APP_KEY});
+  this.client_ = new Dropbox.Client({'key': DROPBOX_APP_KEY});
   this.init_();
 };
 
@@ -17,6 +17,13 @@ recite.DropboxService = function() {
  * @private
  */
 recite.DropboxService.prototype.client_ = null;
+
+
+/**
+ * @type {Dropbox.Datastore.Table}
+ * @private
+ */
+recite.DropboxService.prototype.wordTable_ = null;
 
 
 /**
@@ -31,7 +38,7 @@ recite.DropboxService.prototype.getClient = function() {
  * @private
  */
 recite.DropboxService.prototype.init_ = function() {
-  this.client_.authenticate({interactive: false}, function(error) {
+  this.client_.authenticate({'interactive': false}, function(error) {
     if (error) {
       console.debug('Authentication error: ' + error);
     }
