@@ -59,6 +59,7 @@ module.exports = function(grunt) {
         depswriter: cTools.getPath('build/depswriter.py'),
         root_with_prefix: [
           '"' + bowerPath('closure-library/closure/goog/') + ' ."',
+          '"' + bowerPath('closure-library/third_party/closure/goog/') + ' ../third_party_goog"',
           '"app/js .."',
         ],
       },
@@ -114,6 +115,10 @@ module.exports = function(grunt) {
           {route: '/', path: destPath('dev')},
           {route: '/assets/js/angular/', path: bowerPath('angular/')},
           {route: '/assets/js/goog/', path: bowerPath('closure-library/closure/goog/')},
+          {
+            route: '/assets/js/third_party_goog/',
+            path: bowerPath('closure-library/third_party/closure/goog/')
+          },
           {route: '/assets/js/', path: 'app/js/'}
         ],
       },
