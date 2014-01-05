@@ -11,10 +11,10 @@ Dropbox.Client = function(config) {};
 
 
 /**
- * @param {Object=} opt_config
- * @param {Function=} opt_callback
+ * @param {Object=} opt_options
+ * @param {function((Dropbox.ApiError|Dropbox.AuthError), Dropbox.Client)=} opt_callback
  */
-Dropbox.Client.prototype.authenticate = function(opt_config, opt_callback) {};
+Dropbox.Client.prototype.authenticate = function(opt_options, opt_callback) {};
 
 
 /**
@@ -75,3 +75,17 @@ Dropbox.Datastore.Table.prototype.insert = function(fieldValues) {};
  * @constructor
  */
 Dropbox.Datastore.Record = function() {};
+
+
+
+/**
+ * @constructor
+ */
+Dropbox.ApiError = function() {};
+
+
+
+/**
+ * @constructor
+ */
+Dropbox.AuthError = function() {};

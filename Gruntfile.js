@@ -77,13 +77,11 @@ module.exports = function(grunt) {
           define: ['\'goog.DEBUG=false\''],
           warning_level: 'verbose',
           jscomp_error: [
+            'accessControls',
             'checkRegExp',
             'const',
             'constantProperty',
             'strictModuleDepCheck',
-          ],
-          jscomp_warning: [
-            'accessControls',
             'visibility',
           ],
           jscomp_off: [
@@ -91,6 +89,7 @@ module.exports = function(grunt) {
           ],
           summary_detail_level: 3,
           output_wrapper: '(function(){%output%}).call(this);',
+          js: bowerPath('closure-library/closure/goog/deps.js'),
           externs: [
             'externs/dropbox.js',
             bowerPath('angular-latest/closure/angular.js')
@@ -149,8 +148,8 @@ module.exports = function(grunt) {
       }
     },
     closureLint: {
-      app:{
-        closureLinterPath : '/usr/bin/',
+      app: {
+        closureLinterPath: '/usr/bin/',
         command: 'python2 node_modules/closure-linter-wrapper/tools/gjslint.py --max_line_length=100',
         src: [
           'app/js/**/*.js',
@@ -163,9 +162,9 @@ module.exports = function(grunt) {
       }
     },
     closureFixStyle: {
-      app:{
-        closureLinterPath : '/usr/bin/',
-        command: 'python2 node_modules/closure-linter-wrapper/tools/fixjsstyle.py',
+      app: {
+        closureLinterPath: '/usr/bin/',
+        command: 'python2 node_modules/closure-linter-wrapper/tools/fixjsstyle.py --max_line_length=100',
         src: [
           'app/js/**/*.js',
           'externs/dropbox.js',
@@ -187,7 +186,7 @@ module.exports = function(grunt) {
     });
     app.listen(this.data.port);
     grunt.log.write(
-      'Server available on http://localhost:' + this.data.port + '\nWaiting forever...\n');
+        'Server available on http://localhost:' + this.data.port + '\nWaiting forever...\n');
   });
 
   grunt.registerTask('compileJs', ['mkdir:prod', 'closureBuilder']);
