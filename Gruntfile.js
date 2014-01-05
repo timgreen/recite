@@ -116,7 +116,14 @@ module.exports = function(grunt) {
           {route: '/assets/js/goog/', path: bowerPath('closure-library/closure/goog/')},
           {route: '/assets/js/', path: 'app/js/'}
         ],
-      }
+      },
+      prod: {
+        port: 9001,
+        alias: [
+          {route: '/', path: destPath('prod')},
+          {route: '/assets/js/angular/', path: bowerPath('angular/')}
+        ],
+      },
     },
     concurrent: {
       dev: {
@@ -162,7 +169,8 @@ module.exports = function(grunt) {
       app.use(a.route, connect.static(a.path));
     });
     app.listen(this.data.port);
-    grunt.log.write('Server available on http://localhost:9000\nWaiting forever...\n');
+    grunt.log.write(
+      'Server available on http://localhost:' + this.data.port + '\nWaiting forever...\n');
   });
 
   grunt.registerTask('compileJs', ['mkdir:prod', 'closureBuilder']);
