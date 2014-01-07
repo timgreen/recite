@@ -45,6 +45,10 @@ recite.DropboxService.prototype.getClient = function() {
  * @private
  */
 recite.DropboxService.prototype.init_ = function() {
+  if (!this.client_.isAuthenticated()) {
+    return;
+  }
+
   var self = this;
   this.client_.getDatastoreManager().openDefaultDatastore(function(error, datastore) {
     console.log('datastore ready');
