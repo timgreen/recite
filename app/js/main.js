@@ -36,5 +36,15 @@ recite.App.main = function() {
       }
     };
   });
+
+  module.directive('wordPrimaryList', function() {
+    return {
+      'restrict': 'E',
+      'templateUrl': 'directives/word/word-primary-list.html',
+      'scope': {
+        'primaries': '='
+      }
+    };
+  });
 };
 goog.exportSymbol('recite.App.main', recite.App.main);
