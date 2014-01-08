@@ -26,5 +26,15 @@ recite.App.main = function() {
 
   var module = angular.module('recite', []);
   module.controller('search.SearchCtrl', recite.search.SearchCtrl);
+
+  module.directive('wordResult', function() {
+    return {
+      'restrict': 'E',
+      'templateUrl': 'directives/word/word-result.html',
+      'scope': {
+        'result': '='
+      }
+    };
+  });
 };
 goog.exportSymbol('recite.App.main', recite.App.main);

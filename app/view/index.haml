@@ -13,6 +13,9 @@
         %input(type="submit" value="Search")
         .x {{searchWordInput}}
       .result
+        %word-result(result="result" ng-if="result")
+        %pre
+          {{output}}
 
     -# scripts
     - if (isDevMode) {
