@@ -13,6 +13,7 @@
     "closure-library": "*",
     "angular": "~1.2.7",
     "less": "~1.6.0",
-    "angular-latest": "~1.2.7"
+    "angular-latest": "~1.2.7",
+    "dropbox-build": "*"
   }
 }

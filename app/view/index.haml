@@ -15,14 +15,16 @@
       .result
 
     -# scripts
-    %script(src="/assets/js/angular/angular.min.js")
-    %script(src="https://www.dropbox.com/static/api/dropbox-datastores-1.0-latest.js")
     - if (isDevMode) {
+    %script(src="/assets/js/dropbox/dropbox.js")
+    %script(src="/assets/js/angular/angular.js")
     %script(src="/assets/js/goog/base.js")
     %script(src="/deps.js")
     :javascript
       goog.require('recite.App');
     - } else {
+    %script(src="https://www.dropbox.com/static/api/dropbox-datastores-1.0-latest.js")
+    %script(src="/assets/js/angular/angular.min.js")
     %script(src="assets/js/compiled.js")
     - }
     :javascript
