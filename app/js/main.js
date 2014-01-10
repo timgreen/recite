@@ -56,5 +56,15 @@ recite.App.main = function() {
       }
     };
   });
+
+  module.directive('wordPrimaryHeadword', function() {
+    return {
+      'restrict': 'E',
+      'templateUrl': 'directives/word/word-primary-headword.html',
+      'scope': {
+        'primary': '='
+      }
+    };
+  });
 };
 goog.exportSymbol('recite.App.main', recite.App.main);

@@ -1,0 +1,7 @@
+.terms(ng-if="primary.terms")
+  .term(ng-repeat="term in primary.terms")
+    %ng-switch(on="term.type")
+      %div(ng-switch-when="text")
+        text
+      %div(ng-switch-default=true)
+        default
