@@ -50,11 +50,24 @@ recite.App.registerDirective = function(module, path, opt_params) {
   goog.array.forEach(opt_params || [], function(param) {
     scope[param] = '=';
   });
-  module.directive(name, function() {
+  module.directive(name, ['$compile', function($compile) {
     return {
       'restrict': 'E',
       'templateUrl': 'directives/' + path + '.html',
-      'scope': scope
+      'scope': scope,
+      'compile': function(element) {
+        // solve directive recursion
+        var contents = element.contents().remove();
+        var compiledContents;
+        return function(scope, element) {
+          if (!compiledContents) {
+            compiledContents = $compile(contents);
+          }
+          compiledContents(scope, function(clone) {
+            element.append(clone);
+          });
+        };
+      }
     };
-  });
+  }]);
 };
