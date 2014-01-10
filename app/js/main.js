@@ -1,5 +1,6 @@
 goog.provide('recite.App');
 
+goog.require('goog.array');
 goog.require('goog.dom');
 goog.require('goog.events');
 goog.require('recite.DropboxService');
@@ -27,44 +28,33 @@ recite.App.main = function() {
   var module = angular.module('recite', []);
   module.controller('search.SearchCtrl', recite.search.SearchCtrl);
 
-  module.directive('wordResult', function() {
-    return {
-      'restrict': 'E',
-      'templateUrl': 'directives/word/word-result.html',
-      'scope': {
-        'result': '='
-      }
-    };
-  });
+  recite.App.registerDirective(module, 'word/result', ['result']);
+  recite.App.registerDirective(module, 'word/primary-list', ['primaries']);
+  recite.App.registerDirective(module, 'word/primary', ['primary']);
+  recite.App.registerDirective(module, 'word/primary-headword', ['primary']);
+};
+goog.exportSymbol('recite.App.main', recite.App.main);
 
-  module.directive('wordPrimaryList', function() {
-    return {
-      'restrict': 'E',
-      'templateUrl': 'directives/word/word-primary-list.html',
-      'scope': {
-        'primaries': '='
-      }
-    };
-  });
 
-  module.directive('wordPrimary', function() {
-    return {
-      'restrict': 'E',
-      'templateUrl': 'directives/word/word-primary.html',
-      'scope': {
-        'primary': '='
-      }
-    };
+/**
+ * Register directive.
+ *
+ * @param {angular.Module} module module.
+ * @param {string} path path to directives haml definition, no include '.haml'.
+ * @param {Array.<string>=} opt_params params needed for this directive.
+ */
+recite.App.registerDirective = function(module, path, opt_params) {
+  // turn aa/bb/cc/dd-ee-ff to aaBbCcdDeEfF
+  var name = path.replace(/[/-][a-z]/g, function(s) {return s[1].toUpperCase();});
+  var scope = {};
+  goog.array.forEach(opt_params || [], function(param) {
+    scope[param] = '=';
   });
-
-  module.directive('wordPrimaryHeadword', function() {
+  module.directive(name, function() {
     return {
       'restrict': 'E',
-      'templateUrl': 'directives/word/word-primary-headword.html',
-      'scope': {
-        'primary': '='
-      }
+      'templateUrl': 'directives/' + path + '.html',
+      'scope': scope
     };
   });
 };
-goog.exportSymbol('recite.App.main', recite.App.main);
