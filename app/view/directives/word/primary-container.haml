@@ -1,0 +1,11 @@
+.labels(ng-if="primary.labels")
+  .entry(ng-repeat="label in primary.labels")
+    .label(title="{{label.title}}" ng-bind-html="label.text")
+
+%ol.terms(ng-if="primary.terms")
+  %li.term(ng-repeat="term in primary.terms")
+    [[term]]
+
+%ol.entries(ng-if="primary.entries")
+  %li.entry(ng-repeat="entry in primary.entries")
+    %word-primary(primary="entry")

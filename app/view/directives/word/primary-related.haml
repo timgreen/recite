@@ -1,0 +1,15 @@
+.labels(ng-if="primary.labels")
+  .entry(ng-repeat="label in primary.labels")
+    %span.label(title="{{label.title}}" ng-bind-html="label.text")
+
+.terms(ng-if="primary.terms")
+  .term(ng-repeat="term in primary.terms")
+    %ng-switch(on="term.type")
+      %span(ng-switch-when="text")
+        %span(title="term.reference" ng-bind-html="term.text" ng-class="term.reference && 'link' || 'em'")
+        TODO
+
+
+%ul.entries(ng-if="primary.entries")
+  %li.entry(ng-repeat="entry in primary.entries")
+    %word-primary(primary="entry")

@@ -32,6 +32,9 @@ recite.App.main = function() {
   recite.App.registerDirective(module, 'word/primary-list', ['primaries']);
   recite.App.registerDirective(module, 'word/primary', ['primary']);
   recite.App.registerDirective(module, 'word/primary-headword', ['primary']);
+  recite.App.registerDirective(module, 'word/primary-meaning', ['primary']);
+  recite.App.registerDirective(module, 'word/primary-container', ['primary']);
+  recite.App.registerDirective(module, 'word/primary-related', ['primary']);
 };
 goog.exportSymbol('recite.App.main', recite.App.main);
 

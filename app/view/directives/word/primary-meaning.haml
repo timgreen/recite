@@ -1,0 +1,7 @@
+.terms(ng-if="primary.terms")
+  .term(ng-repeat="term in primary.terms")
+    [[term]]
+
+.entries(ng-if="primary.entries")
+  .entry(ng-repeat="entry in primary.entries")
+    %word-primary(primary="entry")
