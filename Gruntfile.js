@@ -120,6 +120,13 @@ module.exports = function(grunt) {
       depsJs: {
         files: 'app/js/**/*.js',
         tasks: ['closureDepsWriter']
+      },
+      lessFiles: {
+        files: 'app/css/**/*.less',
+        tasks: ['genLessImports'],
+        options: {
+          event: ['added', 'deleted'],
+        }
       }
     },
     server: {
@@ -134,7 +141,8 @@ module.exports = function(grunt) {
             path: bowerPath('closure-library/third_party/closure/goog/')
           },
           {route: '/assets/js/less/', path: bowerPath('less/dist/')},
-          {route: '/assets/js/', path: 'app/js/'}
+          {route: '/assets/js/', path: 'app/js/'},
+          {route: '/assets/css/', path: 'app/css/'}
         ],
       },
       prod: {
@@ -146,7 +154,7 @@ module.exports = function(grunt) {
     },
     concurrent: {
       dev: {
-        tasks: ['server:dev', 'watch:devHaml', 'watch:depsJs'],
+        tasks: ['server:dev', 'watch:devHaml', 'watch:depsJs', 'watch:lessFiles'],
         options: {logConcurrentOutput: true, limit: 10}
       }
     },
@@ -223,8 +231,21 @@ module.exports = function(grunt) {
         });
       });
 
+  grunt.registerTask('genLessImports', 'Generate less imports file for dev mode to include',
+      function() {
+        var importsFile = destPath('dev/imports.less');
+        var lessFiles = grunt.file.expand('app/css/**/*.less');
+        var imports = [];
+        lessFiles.forEach(function(lessFile) {
+          imports.push(
+            '@import "' + 'assets' + lessFile.substr(3) + '";'
+          );
+        });
+        grunt.file.write(importsFile, imports.join('\n'));
+      });
+
   grunt.registerTask('compileJs', ['mkdir:prod', 'angularPrecompile', 'closureBuilder']);
-  grunt.registerTask('dev', ['haml:dev', 'closureDepsWriter', 'concurrent:dev']);
+  grunt.registerTask('dev', ['haml:dev', 'genLessImports', 'closureDepsWriter', 'concurrent:dev']);
   grunt.registerTask('prod', ['compileJs', 'haml:prod', 'server:prod']);
   grunt.registerTask('test', ['haml', 'compileJs', 'closureLint']);
 };
