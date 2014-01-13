@@ -7,6 +7,10 @@
     - } else {
     - }
   %body
+    - if (isDevMode) {
+    %button(onclick="less.refresh()") Refresh Less
+    - }
+
     .add-word
       %input#add-word-input
       %button#add-word-btn Add word
