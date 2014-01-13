@@ -6,7 +6,7 @@
   .term(ng-repeat="term in primary.terms")
     %ng-switch(on="term.type")
       %span(ng-switch-when="text")
-        %span(title="term.reference" ng-bind-html="term.text" ng-class="term.reference && 'link' || 'em'")
+        %span(title="{{term.reference}}" ng-bind-html="term.text" ng-class="term.reference && 'link' || 'em'")
         -# TODO(timgreen)
 
 

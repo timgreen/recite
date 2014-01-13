@@ -1,5 +1,5 @@
-%span.link(title="term.reference" ng-bind-html="term.text" ng-if="term.type == 'text'")
+%span.link(title="{{term.reference}}" ng-bind-html="term.text" ng-if="term.type == 'text'")
 %span.phonetic(ng-bind-html="term.text" ng-if="term.type == 'phonetic'")
 
 %ul(ng-if="term.labels")
-  %li.label(ng-repeat="label in term.labels" title="label.title" ng-bind-html="label.text")
+  %li.label(ng-repeat="label in term.labels" title="{{label.title}}" ng-bind-html="label.text")
