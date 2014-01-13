@@ -4,7 +4,7 @@
 
 %ol.terms(ng-if="primary.terms")
   %li.term(ng-repeat="term in primary.terms")
-    [[term]]
+    %word-term(term="term")
 
 %ol.entries(ng-if="primary.entries")
   %li.entry(ng-repeat="entry in primary.entries")

@@ -2,9 +2,9 @@
   .term(ng-repeat="term in primary.terms")
     %ng-switch(on="term.type")
       %div(ng-switch-when="text")
-        [[term]]
+        %word-term(term="term")
       %div(ng-switch-default=true)
-        [[term]]
+        %word-term(term="term")
 
 .entries(ng-if="primary.entries")
   .entry(ng-repeat="entry in primary.entries")

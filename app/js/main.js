@@ -26,6 +26,14 @@ recite.App.main = function() {
   });
 
   var module = angular.module('recite', []);
+
+  // TODO(timgreen): fix this
+  module.config(['$sceProvider', function($sceProvider) {
+    // Completely disable SCE.  For demonstration purposes only!
+    // Do not use in new projects.
+    $sceProvider.enabled(false);
+  }]);
+
   module.controller('search.SearchCtrl', recite.search.SearchCtrl);
 
   recite.App.registerDirective(module, 'word/result', ['result']);
@@ -35,6 +43,7 @@ recite.App.main = function() {
   recite.App.registerDirective(module, 'word/primary-meaning', ['primary']);
   recite.App.registerDirective(module, 'word/primary-container', ['primary']);
   recite.App.registerDirective(module, 'word/primary-related', ['primary']);
+  recite.App.registerDirective(module, 'word/term', ['term']);
 };
 goog.exportSymbol('recite.App.main', recite.App.main);
 
