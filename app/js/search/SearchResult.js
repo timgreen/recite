@@ -6,27 +6,35 @@ goog.provide('recite.search.SearchResult');
  * @constructor
  *
  * @param {string} word
+ * @param {string} type
  * @param {*} data
  */
-recite.search.SearchResult = function(word, data) {
-  this.word = word;
-  this.data = data;
+recite.search.SearchResult = function(word, type, data) {
+  this['word'] = word;
+  this['type'] = type;
+  this['data'] = data;
 };
-
-
-/**
- * @type {string}
- */
-recite.search.SearchResult.prototype.word;
-
-
-/**
- * @type {*}
- */
-recite.search.SearchResult.prototype.data;
 
 
 /**
  * @return {string}
  */
-recite.search.SearchResult.prototype.getType = goog.abstractMethod;
+recite.search.SearchResult.prototype.getWord = function() {
+  return this['word'];
+};
+
+
+/**
+ * @return {string}
+ */
+recite.search.SearchResult.prototype.getType = function() {
+  return this['type'];
+};
+
+
+/**
+ * @return {*}
+ */
+recite.search.SearchResult.prototype.getDate = function() {
+  return this['data'];
+};

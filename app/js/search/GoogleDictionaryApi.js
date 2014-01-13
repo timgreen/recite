@@ -42,14 +42,6 @@ recite.search.GoogleDictionaryApi.prototype.search = function(word, callback) {
  * @param {Object} json json result from google dictionary api.
  */
 recite.search.GoogleDictionaryResult = function(json) {
-  goog.base(this, json['query'], json);
+  goog.base(this, json['query'], 'google-dictionary', json);
 };
 goog.inherits(recite.search.GoogleDictionaryResult, recite.search.SearchResult);
-
-
-/**
- * @override
- */
-recite.search.GoogleDictionaryResult.prototype.getType = function() {
-  return 'google-dictionary';
-};
