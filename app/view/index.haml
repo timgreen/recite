@@ -1,7 +1,10 @@
 !!! 5
 %html(ng-app="recite")
   %head
-
+    - if (isDevMode) {
+    %script(src="/assets/js/less/less-1.6.0.min.js")
+    - } else {
+    - }
   %body
     .add-word
       %input#add-word-input
