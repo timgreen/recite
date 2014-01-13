@@ -192,5 +192,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('compileJs', ['mkdir:prod', 'closureBuilder']);
   grunt.registerTask('dev', ['haml:dev', 'closureDepsWriter', 'concurrent:dev']);
+  grunt.registerTask('prod', ['compileJs', 'server:prod']);
   grunt.registerTask('test', ['haml', 'compileJs', 'closureLint']);
 };
