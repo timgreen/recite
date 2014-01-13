@@ -133,15 +133,13 @@ module.exports = function(grunt) {
             route: '/assets/js/third_party_goog/',
             path: bowerPath('closure-library/third_party/closure/goog/')
           },
-          {route: '/assets/js/dropbox/', path: bowerPath('dropbox-build/')},
           {route: '/assets/js/', path: 'app/js/'}
         ],
       },
       prod: {
         port: 9001,
         alias: [
-          {route: '/', path: destPath('prod')},
-          {route: '/assets/js/angular/', path: bowerPath('angular/')}
+          {route: '/', path: destPath('prod')}
         ],
       },
     },
