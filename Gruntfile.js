@@ -16,6 +16,9 @@ module.exports = function(grunt) {
   function destPath(path) {
     return 'tmp/dest/' + path;
   }
+  function angularPrecompilePath(path) {
+    return destPath('angularPrecompile/') + (path || '');
+  }
 
 
   // Project configuration.
@@ -98,11 +101,11 @@ module.exports = function(grunt) {
       },
       app: {
         options: {
-          inputs: 'app/js/main.js',
+          inputs: angularPrecompilePath('app/js/main.js'),
           closure_entry_point: 'recite.App.main'
         },
         src: [
-          'app/js/',
+          angularPrecompilePath('app/js/'),
           bowerPath('closure-library/closure/goog'),
           bowerPath('closure-library/third_party/closure/')
         ],
@@ -190,8 +193,39 @@ module.exports = function(grunt) {
         'Server available on http://localhost:' + this.data.port + '\nWaiting forever...\n');
   });
 
-  grunt.registerTask('compileJs', ['mkdir:prod', 'closureBuilder']);
+  grunt.registerTask(
+      'angularPrecompile',
+      'Protect angular proprieties from closure compiler',
+      function() {
+        var jsFiles = grunt.file.expand('app/js/**/*.js');
+        grunt.file.delete(angularPrecompilePath(), {force: true});
+        jsFiles.forEach(function(jsFile) {
+          var dest = angularPrecompilePath(jsFile);
+          var destDir = dest.replace(/\/[^/]+$/, '');
+          grunt.file.mkdir(destDir);
+          var input = grunt.file.read(jsFile);
+          // $scope.abc         => $scope['abc']
+          // $scope.$parent.abc => $scope['$parent']['abc']
+          var output = input.replace(/(\$\w+)((\.\$?\w+)+)/g, function(match, first, rest) {
+            var result = [first];
+            var parts = rest.substr(1).split('\.')
+            var flagContinue = true;
+            parts.forEach(function(part) {
+              if (flagContinue) {
+                result.push('[\'', part, '\']');
+              } else {
+                result.push('.' + part);
+              }
+              flagContinue = (part[0] === '$');
+            });
+            return result.join('');
+          });
+          grunt.file.write(dest, output);
+        });
+      });
+
+  grunt.registerTask('compileJs', ['mkdir:prod', 'angularPrecompile', 'closureBuilder']);
   grunt.registerTask('dev', ['haml:dev', 'closureDepsWriter', 'concurrent:dev']);
-  grunt.registerTask('prod', ['compileJs', 'server:prod']);
+  grunt.registerTask('prod', ['compileJs', 'haml:prod', 'server:prod']);
   grunt.registerTask('test', ['haml', 'compileJs', 'closureLint']);
 };
