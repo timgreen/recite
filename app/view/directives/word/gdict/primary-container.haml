@@ -4,8 +4,8 @@
 
 %ol.terms(ng-if="primary.terms")
   %li.term(ng-repeat="term in primary.terms")
-    %word-term(term="term")
+    %word-gdict-term(term="term")
 
 %ol.entries(ng-if="primary.entries")
   %li.entry(ng-repeat="entry in primary.entries")
-    %word-primary(primary="entry")
+    %word-gdict-primary(primary="entry")

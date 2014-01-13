@@ -2,10 +2,10 @@
   .term(ng-repeat="term in primary.terms")
     %ng-switch(on="term.type")
       %div(ng-switch-when="text")
-        %word-term(term="term")
+        %word-gdict-term(term="term")
       %div(ng-switch-default=true)
-        %word-term(term="term")
+        %word-gdict-term(term="term")
 
 .entries(ng-if="primary.entries")
   .entry(ng-repeat="entry in primary.entries")
-    %word-primary(primary="entry")
+    %word-gdict-primary(primary="entry")

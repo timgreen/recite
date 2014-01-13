@@ -37,13 +37,15 @@ recite.App.main = function() {
   module.controller('search.SearchCtrl', recite.search.SearchCtrl);
 
   recite.App.registerDirective(module, 'word/result', ['result']);
-  recite.App.registerDirective(module, 'word/primary-list', ['primaries']);
-  recite.App.registerDirective(module, 'word/primary', ['primary']);
-  recite.App.registerDirective(module, 'word/primary-headword', ['primary']);
-  recite.App.registerDirective(module, 'word/primary-meaning', ['primary']);
-  recite.App.registerDirective(module, 'word/primary-container', ['primary']);
-  recite.App.registerDirective(module, 'word/primary-related', ['primary']);
-  recite.App.registerDirective(module, 'word/term', ['term']);
+
+  recite.App.registerDirective(module, 'word/gdict/result', ['result']);
+  recite.App.registerDirective(module, 'word/gdict/primary-list', ['primaries']);
+  recite.App.registerDirective(module, 'word/gdict/primary', ['primary']);
+  recite.App.registerDirective(module, 'word/gdict/primary-headword', ['primary']);
+  recite.App.registerDirective(module, 'word/gdict/primary-meaning', ['primary']);
+  recite.App.registerDirective(module, 'word/gdict/primary-container', ['primary']);
+  recite.App.registerDirective(module, 'word/gdict/primary-related', ['primary']);
+  recite.App.registerDirective(module, 'word/gdict/term', ['term']);
 };
 goog.exportSymbol('recite.App.main', recite.App.main);
 
