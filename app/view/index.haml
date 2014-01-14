@@ -1,5 +1,5 @@
 !!! 5
-%html(ng-app="recite")
+%html(ng-app="recite" ng-csp=true)
   %head
     - if (isDevMode) {
     %link(rel="stylesheet/less" type="text/css" href="/imports.less")
