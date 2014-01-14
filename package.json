@@ -26,6 +26,7 @@
     "closure-tools": "~0.1.4",
     "grunt-mkdir": "~0.1.1",
     "grunt-closure-linter": "~0.1.4",
-    "closure-linter-wrapper": "~0.2.9"
+    "closure-linter-wrapper": "~0.2.9",
+    "grunt-contrib-less": "~0.9.0"
   }
 }

@@ -6,6 +6,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-closure-linter');
   grunt.loadNpmTasks('grunt-closure-tools');
   grunt.loadNpmTasks('grunt-concurrent');
+  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-haml');
   grunt.loadNpmTasks('grunt-mkdir');
@@ -56,6 +57,16 @@ module.exports = function(grunt) {
           create: [destPath('prod/assets/js')]
         }
       },
+    },
+    less: {
+      prod: {
+        options: {
+          paths: 'app/',
+        },
+        files: {
+          'tmp/dest/prod/assets/compiled.css': destPath('dev/imports.less')
+        }
+      }
     },
     closureDepsWriter: {
       options: {
