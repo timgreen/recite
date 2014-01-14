@@ -1,5 +1,7 @@
 %span.link(title="{{term.reference}}" ng-bind-html="term.text" ng-if="term.type == 'text'")
 %span.phonetic(ng-bind-html="term.text" ng-if="term.type == 'phonetic'")
+.word-pronounce(ng-if="term.type == 'sound'")
+  %audio(preload=true)
+    %source(src="{{term.text}}" type="audio/mpeg")
 
-%ul(ng-if="term.labels")
-  %li.label(ng-repeat="label in term.labels" title="{{label.title}}" ng-bind-html="label.text")
+%span.label(ng-repeat="label in term.labels" title="{{label.title}}" ng-bind-html="label.text")

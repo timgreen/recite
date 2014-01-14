@@ -142,13 +142,15 @@ module.exports = function(grunt) {
           },
           {route: '/assets/js/less/', path: bowerPath('less/dist/')},
           {route: '/assets/js/', path: 'app/js/'},
-          {route: '/assets/css/', path: 'app/css/'}
+          {route: '/assets/css/', path: 'app/css/'},
+          {route: '/assets/images/', path: 'app/images/'},
         ],
       },
       prod: {
         port: 9001,
         alias: [
-          {route: '/', path: destPath('prod')}
+          {route: '/', path: destPath('prod')},
+          {route: '/assets/images/', path: 'app/images/'},
         ],
       },
     },
