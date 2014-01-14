@@ -5,6 +5,7 @@ goog.require('goog.dom');
 goog.require('goog.events');
 goog.require('recite.DropboxService');
 goog.require('recite.search.SearchCtrl');
+goog.require('recite.word.SoundCtrl');
 
 
 /**
@@ -35,6 +36,7 @@ recite.App.main = function() {
   }]);
 
   module.controller('search.SearchCtrl', recite.search.SearchCtrl);
+  module.controller('word.SoundCtrl', recite.word.SoundCtrl);
 
   recite.App.registerDirective(module, 'word/result', ['result']);
 
