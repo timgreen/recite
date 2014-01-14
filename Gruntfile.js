@@ -235,12 +235,12 @@ module.exports = function(grunt) {
 
   grunt.registerTask('genLessImports', 'Generate less imports file for dev mode to include',
       function() {
-        var importsFile = destPath('dev/imports.less');
+        var importsFile = destPath('dev/assets/imports.less');
         var lessFiles = grunt.file.expand('app/css/**/*.less');
         var imports = [];
         lessFiles.forEach(function(lessFile) {
           imports.push(
-            '@import "' + 'assets' + lessFile.substr(3) + '";'
+            '@import "' + lessFile.substr(4) + '";'
           );
         });
         grunt.file.write(importsFile, imports.join('\n'));
