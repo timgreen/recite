@@ -285,7 +285,8 @@ module.exports = function(grunt) {
       });
 
   grunt.registerTask('compileJs', ['mkdir:prod', 'angularPrecompile', 'closureBuilder']);
+  grunt.registerTask('compileCss', ['genLessImports', 'less:prod']);
   grunt.registerTask('dev', ['haml:dev', 'genLessImports', 'closureDepsWriter', 'concurrent:dev']);
-  grunt.registerTask('prod', ['compileJs', 'haml:prod', 'server:prod']);
+  grunt.registerTask('prod', ['compileJs', 'compileCss', 'haml:prod', 'copy:prod']);
   grunt.registerTask('test', ['haml', 'compileJs', 'closureLint']);
 };
