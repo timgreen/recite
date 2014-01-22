@@ -2,4 +2,5 @@
 
 ## Credits
 
+   * App icon, Deleket - http://deleket.deviantart.com
    * Speaker icon, http://designmodo.com
