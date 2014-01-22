@@ -73,6 +73,14 @@ module.exports = function(grunt) {
             cwd: 'app/images/',
             src: ['**/*'],
             dest: destPath('prod/assets/images/')
+          },
+          {
+            src: bowerPath('angular/angular.min.js'),
+            dest: destPath('prod/assets/js/angular.min.js')
+          },
+          {
+            src: bowerPath('dropbox-datastores-1.0-latest/index.js'),
+            dest: destPath('prod/assets/js/dropbox-datastores-1.0-latest.js')
           }
         ]
       }
