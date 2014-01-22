@@ -33,10 +33,11 @@
     %script(src="/deps.js")
     :javascript
       goog.require('recite.App');
+    :javascript
+      recite.App.main();
     - } else {
     %script(src="assets/js/dropbox-datastores-1.0-latest.js")
     %script(src="assets/js/angular.min.js")
     %script(src="assets/js/compiled.js")
+    %script(src="main.js")
     - }
-    :javascript
-      recite.App.main();

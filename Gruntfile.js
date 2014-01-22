@@ -139,8 +139,7 @@ module.exports = function(grunt) {
       },
       app: {
         options: {
-          inputs: angularPrecompilePath('app/js/main.js'),
-          closure_entry_point: 'recite.App.main'
+          namespaces: 'recite.App',
         },
         src: [
           angularPrecompilePath('app/js/'),
