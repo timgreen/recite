@@ -1,8 +1,10 @@
 goog.provide('recite.search.GoogleDictionaryApi');
 goog.provide('recite.search.GoogleDictionaryResult');
 
+goog.require('goog.Uri');
+goog.require('goog.Uri.QueryData');
 goog.require('goog.array');
-goog.require('goog.net.Jsonp');
+goog.require('goog.net.XhrIo');
 goog.require('recite.search.SearchResult');
 
 
@@ -22,13 +24,26 @@ goog.addSingletonGetter(recite.search.GoogleDictionaryApi);
  * @param {Function} callback callback function.
  */
 recite.search.GoogleDictionaryApi.prototype.search = function(word, callback) {
-  var jsonp = new goog.net.Jsonp(new goog.Uri('http://www.google.com/dictionary/json'));
-  jsonp.send({
+  var uri = new goog.Uri('https://www.google.com/dictionary/json');
+  uri.setQueryData(goog.Uri.QueryData.createFromMap({
     'q': word,
     'sl': 'en',
-    'tl': 'en'
-  }, function(reply) {
-    var result = new recite.search.GoogleDictionaryResult(reply);
+    'tl': 'en',
+    'callback': 'a'
+  }));
+  goog.net.XhrIo.send(uri, function(e) {
+    var xhr = /** @type {goog.net.XhrIo} */ (e.target);
+    // TODO(timgreen): check status
+    var text = xhr.getResponseText();
+    // NOTE(timgreen): hack jsonp result to json, sandbox workaround.
+    text = text.substr('a('.length);
+    text = text.substring(0, text.lastIndexOf(','));
+    text = text.substring(0, text.lastIndexOf(','));
+    text = text.replace(/\\x(..)/g, function(a, i) {
+      return String.fromCharCode(parseInt(i, 16));
+    });
+    var json = /** @type {Object} */ (JSON.parse(text));
+    var result = new recite.search.GoogleDictionaryResult(json);
     callback(result);
   });
 };
