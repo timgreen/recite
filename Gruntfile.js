@@ -202,7 +202,7 @@ module.exports = function(grunt) {
         closureLinterPath: '/usr/bin/',
         command: 'python2 node_modules/closure-linter-wrapper/tools/gjslint.py --max_line_length=100',
         src: [
-          'app/js/**/*.js',
+          'app/**/*.js',
           'externs/dropbox.js',
         ],
         options: {
