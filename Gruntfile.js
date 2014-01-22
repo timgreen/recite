@@ -6,6 +6,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-closure-linter');
   grunt.loadNpmTasks('grunt-closure-tools');
   grunt.loadNpmTasks('grunt-concurrent');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-haml');
@@ -57,6 +58,24 @@ module.exports = function(grunt) {
           create: [destPath('prod/assets/js')]
         }
       },
+    },
+    copy: {
+      prod: {
+        files: [
+          {
+            expand: true,
+            cwd: 'app/chrome/',
+            src: ['*'],
+            dest: destPath('prod/')
+          },
+          {
+            expand: true,
+            cwd: 'app/images/',
+            src: ['**/*'],
+            dest: destPath('prod/assets/images/')
+          }
+        ]
+      }
     },
     less: {
       prod: {
