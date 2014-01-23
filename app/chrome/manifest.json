@@ -12,6 +12,7 @@
     "128": "icon-128.png"
   },
   "permissions": [
-    "https://www.google.com/"
+    "https://www.google.com/",
+    "http://oald8.oxfordlearnersdictionaries.com/"
   ]
 }
