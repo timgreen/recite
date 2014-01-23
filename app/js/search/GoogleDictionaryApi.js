@@ -5,12 +5,14 @@ goog.require('goog.Uri');
 goog.require('goog.Uri.QueryData');
 goog.require('goog.array');
 goog.require('goog.net.XhrIo');
+goog.require('recite.search.SearchApi');
 goog.require('recite.search.SearchResult');
 
 
 
 /**
  * @constructor
+ * @implements {recite.search.SearchApi}
  */
 recite.search.GoogleDictionaryApi = function() {
 };
@@ -20,13 +22,13 @@ goog.addSingletonGetter(recite.search.GoogleDictionaryApi);
 /**
  * Search a word.
  *
- * @param {string} word word to search.
- * @param {Function} callback callback function.
+ * @param {string} query query to search.
+ * @param {function(recite.search.SearchResult)} callback callback function.
  */
-recite.search.GoogleDictionaryApi.prototype.search = function(word, callback) {
+recite.search.GoogleDictionaryApi.prototype.search = function(query, callback) {
   var uri = new goog.Uri('https://www.google.com/dictionary/json');
   uri.setQueryData(goog.Uri.QueryData.createFromMap({
-    'q': word,
+    'q': query,
     'sl': 'en',
     'tl': 'en',
     'callback': 'a'
