@@ -12,19 +12,19 @@ goog.require('recite.word.SoundCtrl');
  * Entry point.
  */
 recite.App.main = function() {
-  // var dropbox = new recite.DropboxService();
-  // console.log('oauth', dropbox.getClient().isAuthenticated());
-  // if (!dropbox.getClient().isAuthenticated()) {
-  //   dropbox.getClient().authenticate();
-  // }
+  var dropbox = new recite.DropboxService();
+  console.log('oauth', dropbox.getClient().isAuthenticated());
+  if (!dropbox.getClient().isAuthenticated()) {
+    dropbox.getClient().authenticate();
+  }
 
-  // goog.events.listen(goog.dom.getElement('add-word-btn'), 'click', function() {
-  //   var input = goog.dom.getElement('add-word-input');
-  //   var word = input.value;
-  //   input.value = '';
-  //   dropbox.addWord(word);
-  //   console.log('add word', word);
-  // });
+  goog.events.listen(goog.dom.getElement('add-word-btn'), 'click', function() {
+    var input = goog.dom.getElement('add-word-input');
+    var word = input.value;
+    input.value = '';
+    dropbox.addWord(word);
+    console.log('add word', word);
+  });
 
   var module = angular.module('recite', []);
 

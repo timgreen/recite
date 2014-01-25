@@ -29,6 +29,13 @@ Dropbox.Client.prototype.isAuthenticated = function() { return true; };
 Dropbox.Client.prototype.getDatastoreManager = function() { return null; };
 
 
+/**
+ * @param {Dropbox.AuthDriver} driver
+ * @return {Dropbox.Client}
+ */
+Dropbox.Client.prototype.authDriver = function(driver) { return this; };
+
+
 
 /**
  * @constructor
@@ -89,3 +96,18 @@ Dropbox.ApiError = function() {};
  * @constructor
  */
 Dropbox.AuthError = function() {};
+
+
+
+/**
+ * @constructor
+ */
+Dropbox.AuthDriver = function() {};
+
+
+
+/**
+ * @constructor
+ * @extends {Dropbox.AuthDriver}
+ */
+Dropbox.AuthDriver.ChromeApp = function() {};

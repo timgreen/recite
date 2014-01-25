@@ -12,6 +12,10 @@
     "128": "icon-128.png"
   },
   "permissions": [
+    "storage",
+    "identity",
+
+    "https://www.dropbox.com/",
     "https://www.google.com/",
     "http://oald8.oxfordlearnersdictionaries.com/"
   ]

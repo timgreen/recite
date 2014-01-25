@@ -8,6 +8,7 @@ goog.provide('recite.DropboxService');
 recite.DropboxService = function() {
   var DROPBOX_APP_KEY = 'whmi318p8xpr56a';
   this.client_ = new Dropbox.Client({'key': DROPBOX_APP_KEY});
+  this.client_.authDriver(new Dropbox.AuthDriver.ChromeApp());
   var self = this;
   this.client_.authenticate({'interactive': false}, function(error) {
     if (error) {
