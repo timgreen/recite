@@ -1,8 +1,9 @@
-goog.provide('recite.search.SearchCtrl');
+goog.provide('recite.angular.SearchCtrl');
 
 goog.require('goog.format.JsonPrettyPrinter');
 goog.require('goog.format.JsonPrettyPrinter.TextDelimiters');
 goog.require('recite.search.GoogleDictionaryApi');
+goog.require('recite.search.OaldApi');
 
 
 /**
@@ -10,11 +11,11 @@ goog.require('recite.search.GoogleDictionaryApi');
  *
  * @param {angular.Scope} $scope scope.
  */
-recite.search.SearchCtrl = function($scope) {
+recite.angular.SearchCtrl = function($scope) {
   $scope.searchWordInput = '';
   $scope.ouptut = '';
   $scope.searchWord = function() {
-    recite.search.GoogleDictionaryApi.getInstance().search($scope.searchWordInput, function(reply) {
+    recite.search.OaldApi.getInstance().search($scope.searchWordInput, function(reply) {
       $scope.$apply(function() {
         $scope.searchWordInput = '';
         var printer = new goog.format.JsonPrettyPrinter(
@@ -25,4 +26,4 @@ recite.search.SearchCtrl = function($scope) {
     });
   };
 };
-recite.search.SearchCtrl['$inject'] = ['$scope'];
+recite.angular.SearchCtrl['$inject'] = ['$scope'];

@@ -1,17 +1,17 @@
-goog.provide('recite.App');
+goog.provide('recite.angular.App');
 
 goog.require('goog.array');
 goog.require('goog.dom');
 goog.require('goog.events');
 goog.require('recite.DropboxService');
-goog.require('recite.search.SearchCtrl');
-goog.require('recite.word.SoundCtrl');
+goog.require('recite.angular.SearchCtrl');
+goog.require('recite.angular.SoundCtrl');
 
 
 /**
  * Entry point.
  */
-recite.App.main = function() {
+recite.angular.App.main = function() {
   var dropbox = new recite.DropboxService();
   console.log('oauth', dropbox.getClient().isAuthenticated());
   if (!dropbox.getClient().isAuthenticated()) {
@@ -35,21 +35,21 @@ recite.App.main = function() {
     $sceProvider.enabled(false);
   }]);
 
-  module.controller('search.SearchCtrl', recite.search.SearchCtrl);
-  module.controller('word.SoundCtrl', recite.word.SoundCtrl);
+  module.controller('search.SearchCtrl', recite.angular.SearchCtrl);
+  module.controller('SoundCtrl', recite.angular.SoundCtrl);
 
-  recite.App.registerDirective(module, 'word/result', ['result']);
+  recite.angular.App.registerDirective(module, 'word/result', ['result']);
 
-  recite.App.registerDirective(module, 'word/gdict/result', ['result']);
-  recite.App.registerDirective(module, 'word/gdict/primary-list', ['primaries']);
-  recite.App.registerDirective(module, 'word/gdict/primary', ['primary']);
-  recite.App.registerDirective(module, 'word/gdict/primary-headword', ['primary']);
-  recite.App.registerDirective(module, 'word/gdict/primary-meaning', ['primary']);
-  recite.App.registerDirective(module, 'word/gdict/primary-container', ['primary']);
-  recite.App.registerDirective(module, 'word/gdict/primary-related', ['primary']);
-  recite.App.registerDirective(module, 'word/gdict/term', ['term']);
+  recite.angular.App.registerDirective(module, 'word/gdict/result', ['result']);
+  recite.angular.App.registerDirective(module, 'word/gdict/primary-list', ['primaries']);
+  recite.angular.App.registerDirective(module, 'word/gdict/primary', ['primary']);
+  recite.angular.App.registerDirective(module, 'word/gdict/primary-headword', ['primary']);
+  recite.angular.App.registerDirective(module, 'word/gdict/primary-meaning', ['primary']);
+  recite.angular.App.registerDirective(module, 'word/gdict/primary-container', ['primary']);
+  recite.angular.App.registerDirective(module, 'word/gdict/primary-related', ['primary']);
+  recite.angular.App.registerDirective(module, 'word/gdict/term', ['term']);
 };
-goog.exportSymbol('recite.App.main', recite.App.main);
+goog.exportSymbol('recite.angular.App.main', recite.angular.App.main);
 
 
 /**
@@ -59,7 +59,7 @@ goog.exportSymbol('recite.App.main', recite.App.main);
  * @param {string} path path to directives haml definition, no include '.haml'.
  * @param {Array.<string>=} opt_params params needed for this directive.
  */
-recite.App.registerDirective = function(module, path, opt_params) {
+recite.angular.App.registerDirective = function(module, path, opt_params) {
   // turn aa/bb/cc/dd-ee-ff to aaBbCcdDeEfF
   var name = path.replace(/[/-][a-z]/g, function(s) {return s[1].toUpperCase();});
   var scope = {};

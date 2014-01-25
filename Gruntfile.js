@@ -139,7 +139,7 @@ module.exports = function(grunt) {
       },
       app: {
         options: {
-          namespaces: 'recite.App',
+          namespaces: 'recite.angular.App',
         },
         src: [
           angularPrecompilePath('app/js/'),

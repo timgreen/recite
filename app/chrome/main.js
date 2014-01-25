@@ -1,1 +1,1 @@
-recite.App.main();
+recite.angular.App.main();

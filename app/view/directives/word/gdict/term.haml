@@ -1,6 +1,6 @@
 %span.link(title="{{term.reference}}" ng-bind-html="term.text" ng-if="term.type == 'text'")
 %span.phonetic(ng-bind-html="term.text" ng-if="term.type == 'phonetic'")
-.word-pronounce(ng-if="term.type == 'sound'" ng-click="play($event.target)" ng-controller="word.SoundCtrl")
+.word-pronounce(ng-if="term.type == 'sound'" ng-click="play($event.target)" ng-controller="SoundCtrl")
   %audio(preload=true)
     %source(src="{{term.text}}" type="audio/mpeg")
 

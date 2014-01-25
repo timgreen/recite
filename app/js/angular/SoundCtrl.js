@@ -1,4 +1,4 @@
-goog.provide('recite.word.SoundCtrl');
+goog.provide('recite.angular.SoundCtrl');
 
 goog.require('goog.dom.classes');
 goog.require('goog.events');
@@ -9,7 +9,7 @@ goog.require('goog.events');
  *
  * @param {angular.Scope} $scope scope.
  */
-recite.word.SoundCtrl = function($scope) {
+recite.angular.SoundCtrl = function($scope) {
   $scope.play = function(audioContainer) {
     var audio = audioContainer.children[0];
     goog.dom.classes.add(audioContainer, 'playing');
@@ -19,4 +19,4 @@ recite.word.SoundCtrl = function($scope) {
     audio.play();
   };
 };
-recite.word.SoundCtrl['$inject'] = ['$scope'];
+recite.angular.SoundCtrl['$inject'] = ['$scope'];
