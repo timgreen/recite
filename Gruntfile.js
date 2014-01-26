@@ -11,6 +11,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-haml');
   grunt.loadNpmTasks('grunt-mkdir');
+  grunt.loadNpmTasks('grunt-rsync');
 
   function bowerPath(filename) {
     return 'tmp/bower_components/' + filename;
@@ -53,11 +54,75 @@ module.exports = function(grunt) {
       }
     },
     mkdir: {
+      dev: {
+        options: {
+          create: [destPath('dev/assets/js')]
+        }
+      },
       prod: {
         options: {
           create: [destPath('prod/assets/js')]
         }
       },
+    },
+    rsync: {
+      options: {
+        recursive: true
+      },
+      devClosureGoog: {
+        options: {
+          src: bowerPath('closure-library/closure/goog/'),
+          dest: destPath('dev/assets/js/goog/'),
+        }
+      },
+      devClosureThirdparty: {
+        options: {
+          src: bowerPath('closure-library/third_party/closure/goog/'),
+          dest: destPath('dev/assets/js/third_party_goog/'),
+        }
+      },
+      devAngular: {
+        options: {
+          src: bowerPath('angular/'),
+          dest: destPath('dev/assets/js/angular/'),
+        }
+      },
+      devDropbox: {
+        options: {
+          src: bowerPath('dropbox-datastores-1.0-latest/index.js'),
+          dest: destPath('dev/assets/js/dropbox-datastores-1.0-latest.js')
+        }
+      },
+      devLess: {
+        options: {
+          src: bowerPath('less/dist/'),
+          dest: destPath('dev/assets/js/less/'),
+        }
+      },
+      devJs: {
+        options: {
+          src: 'app/js/',
+          dest: destPath('dev/assets/js/recite/'),
+        }
+      },
+      devCss: {
+        options: {
+          src: 'app/css/',
+          dest: destPath('dev/assets/css/'),
+        }
+      },
+      devImages: {
+        options: {
+          src: 'app/images/',
+          dest: destPath('dev/assets/images/'),
+        }
+      },
+      devChrome: {
+        options: {
+          src: 'app/chrome/',
+          dest: destPath('dev/')
+        }
+      }
     },
     copy: {
       prod: {
@@ -91,7 +156,7 @@ module.exports = function(grunt) {
           paths: 'app/',
         },
         files: {
-          'tmp/dest/prod/assets/compiled.css': destPath('dev/imports.less')
+          'tmp/dest/prod/assets/compiled.css': destPath('dev/assets/imports.less')
         }
       }
     },
@@ -101,7 +166,7 @@ module.exports = function(grunt) {
         root_with_prefix: [
           '"' + bowerPath('closure-library/closure/goog/') + ' ."',
           '"' + bowerPath('closure-library/third_party/closure/goog/') + ' ../third_party_goog"',
-          '"app/js .."',
+          '"app/js ../recite"',
         ],
       },
       devDeps: {
@@ -166,34 +231,9 @@ module.exports = function(grunt) {
         }
       }
     },
-    server: {
-      dev: {
-        port: 9000,
-        alias: [
-          {route: '/', path: destPath('dev')},
-          {route: '/assets/js/angular/', path: bowerPath('angular/')},
-          {route: '/assets/js/goog/', path: bowerPath('closure-library/closure/goog/')},
-          {
-            route: '/assets/js/third_party_goog/',
-            path: bowerPath('closure-library/third_party/closure/goog/')
-          },
-          {route: '/assets/js/less/', path: bowerPath('less/dist/')},
-          {route: '/assets/js/', path: 'app/js/'},
-          {route: '/assets/css/', path: 'app/css/'},
-          {route: '/assets/images/', path: 'app/images/'},
-        ],
-      },
-      prod: {
-        port: 9001,
-        alias: [
-          {route: '/', path: destPath('prod')},
-          {route: '/assets/images/', path: 'app/images/'},
-        ],
-      },
-    },
     concurrent: {
       dev: {
-        tasks: ['server:dev', 'watch:devHaml', 'watch:depsJs', 'watch:lessFiles'],
+        tasks: ['watch:devHaml', 'watch:depsJs', 'watch:lessFiles'],
         options: {logConcurrentOutput: true, limit: 10}
       }
     },
@@ -227,18 +267,6 @@ module.exports = function(grunt) {
         }
       }
     }
-  });
-
-  grunt.registerMultiTask('server', 'Static server', function() {
-    var done = this.async();
-    var connect = require('connect');
-    var app = connect();
-    this.data.alias.forEach(function(a) {
-      app.use(a.route, connect.static(a.path));
-    });
-    app.listen(this.data.port);
-    grunt.log.write(
-        'Server available on http://localhost:' + this.data.port + '\nWaiting forever...\n');
   });
 
   grunt.registerTask(
@@ -287,7 +315,21 @@ module.exports = function(grunt) {
 
   grunt.registerTask('compileJs', ['mkdir:prod', 'angularPrecompile', 'closureBuilder']);
   grunt.registerTask('compileCss', ['genLessImports', 'less:prod']);
-  grunt.registerTask('dev', ['haml:dev', 'genLessImports', 'closureDepsWriter', 'concurrent:dev']);
+
+  grunt.registerTask('rsyncDev', [
+    'mkdir:dev',
+    'rsync:devClosureGoog',
+    'rsync:devClosureThirdparty',
+    'rsync:devAngular',
+    'rsync:devDropbox',
+    'rsync:devLess',
+    'rsync:devJs',
+    'rsync:devCss',
+    'rsync:devImages',
+    'rsync:devChrome',
+  ]);
+
+  grunt.registerTask('dev', ['haml:dev', 'rsyncDev', 'genLessImports', 'closureDepsWriter', 'concurrent:dev']);
   grunt.registerTask('prod', ['compileJs', 'compileCss', 'haml:prod', 'copy:prod']);
   grunt.registerTask('test', ['haml', 'compileJs', 'closureLint']);
 };
