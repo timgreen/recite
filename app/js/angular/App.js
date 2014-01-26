@@ -53,6 +53,9 @@ recite.angular.App.main = function() {
 
   if (!COMPILED) {
     angular.bootstrap(document, ['recite']);
+    angular.element(goog.dom.getElement('refresh-less')).on('click', function() {
+      window['less']['refresh']();
+    });
   }
 };
 goog.exportSymbol('recite.angular.App.main', recite.angular.App.main);
