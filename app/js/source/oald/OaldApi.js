@@ -1,5 +1,4 @@
-goog.provide('recite.search.OaldApi');
-goog.provide('recite.search.OaldResult');
+goog.provide('recite.source.oald.OaldApi');
 
 goog.require('goog.Uri');
 goog.require('goog.Uri.QueryData');
@@ -15,9 +14,9 @@ goog.require('recite.search.SearchResult');
  * @constructor
  * @implements {recite.search.SearchApi}
  */
-recite.search.OaldApi = function() {
+recite.source.oald.OaldApi = function() {
 };
-goog.addSingletonGetter(recite.search.OaldApi);
+goog.addSingletonGetter(recite.source.oald.OaldApi);
 
 
 /**
@@ -26,7 +25,7 @@ goog.addSingletonGetter(recite.search.OaldApi);
  * @param {string} query query to search.
  * @param {function(recite.search.SearchResult)} callback callback function.
  */
-recite.search.OaldApi.prototype.search = function(query, callback) {
+recite.source.oald.OaldApi.prototype.search = function(query, callback) {
   var uri = new goog.Uri('http://oald8.oxfordlearnersdictionaries.com/search/');
   uri.setQueryData(goog.Uri.QueryData.createFromMap({
     'q': query,
@@ -35,7 +34,7 @@ recite.search.OaldApi.prototype.search = function(query, callback) {
   }));
   goog.net.XhrIo.send(uri, function(e) {
     var xhr = /** @type {goog.net.XhrIo} */ (e.target);
-    var entryContent = recite.search.OaldApi.createResult(xhr.getResponseText());
+    var entryContent = recite.source.oald.OaldApi.createResult(xhr.getResponseText());
     console.log(entryContent);
     var dom = /** @type {DocumentFragment} */ (goog.dom.htmlToDocumentFragment(entryContent));
     console.log(dom);
@@ -49,13 +48,13 @@ recite.search.OaldApi.prototype.search = function(query, callback) {
  * @param {string} htmlText html.
  * @return {*}
  */
-recite.search.OaldApi.createResult = function(htmlText) {
+recite.source.oald.OaldApi.createResult = function(htmlText) {
   var start = '<div id="entryContent">';
   var end = '<!-- End of DIV entry-->';
   if (htmlText.indexOf(start) != -1) {
     var tmp = htmlText.substr(htmlText.indexOf(start) + start.length);
     var entryContent = tmp.substring(0, tmp.indexOf(end));
-    return recite.search.OaldApi.createWord(entryContent);
+    return recite.source.oald.OaldApi.createWord(entryContent);
   }
 };
 
@@ -66,7 +65,7 @@ recite.search.OaldApi.createResult = function(htmlText) {
  * @param {string} htmlText html.
  * @return {*}
  */
-recite.search.OaldApi.createWord = function(htmlText) {
+recite.source.oald.OaldApi.createWord = function(htmlText) {
   var replaceImages = [
     {
       from: 'http://oald8.oxfordlearnersdictionaries.com/external/images/coresym.gif',

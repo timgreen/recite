@@ -1,5 +1,5 @@
-goog.provide('recite.search.GoogleDictionaryApi');
-goog.provide('recite.search.GoogleDictionaryResult');
+goog.provide('recite.source.google.GoogleApi');
+goog.provide('recite.source.google.GoogleResult');
 
 goog.require('goog.Uri');
 goog.require('goog.Uri.QueryData');
@@ -14,9 +14,9 @@ goog.require('recite.search.SearchResult');
  * @constructor
  * @implements {recite.search.SearchApi}
  */
-recite.search.GoogleDictionaryApi = function() {
+recite.source.google.GoogleApi = function() {
 };
-goog.addSingletonGetter(recite.search.GoogleDictionaryApi);
+goog.addSingletonGetter(recite.source.google.GoogleApi);
 
 
 /**
@@ -25,7 +25,7 @@ goog.addSingletonGetter(recite.search.GoogleDictionaryApi);
  * @param {string} query query to search.
  * @param {function(recite.search.SearchResult)} callback callback function.
  */
-recite.search.GoogleDictionaryApi.prototype.search = function(query, callback) {
+recite.source.google.GoogleApi.prototype.search = function(query, callback) {
   var uri = new goog.Uri('https://www.google.com/dictionary/json');
   uri.setQueryData(goog.Uri.QueryData.createFromMap({
     'q': query,
@@ -45,7 +45,7 @@ recite.search.GoogleDictionaryApi.prototype.search = function(query, callback) {
       return String.fromCharCode(parseInt(i, 16));
     });
     var json = /** @type {Object} */ (JSON.parse(text));
-    var result = new recite.search.GoogleDictionaryResult(json);
+    var result = new recite.source.google.GoogleResult(json);
     callback(result);
   });
 };
@@ -58,7 +58,7 @@ recite.search.GoogleDictionaryApi.prototype.search = function(query, callback) {
  *
  * @param {Object} json json result from google dictionary api.
  */
-recite.search.GoogleDictionaryResult = function(json) {
+recite.source.google.GoogleResult = function(json) {
   goog.base(this, json['query'], 'google-dictionary', json);
 };
-goog.inherits(recite.search.GoogleDictionaryResult, recite.search.SearchResult);
+goog.inherits(recite.source.google.GoogleResult, recite.search.SearchResult);
