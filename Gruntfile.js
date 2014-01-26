@@ -133,7 +133,7 @@ module.exports = function(grunt) {
           js: bowerPath('closure-library/closure/goog/deps.js'),
           externs: [
             'externs/dropbox.js',
-            bowerPath('angular-latest/closure/angular.js')
+            bowerPath('angular-1.2/index.js')
           ],
         }
       },
