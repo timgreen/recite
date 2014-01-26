@@ -35,10 +35,8 @@ recite.source.oald.OaldApi.prototype.search = function(query, callback) {
   }));
   goog.net.XhrIo.send(uri, function(e) {
     var xhr = /** @type {goog.net.XhrIo} */ (e.target);
-    var entryContent = recite.source.oald.OaldApi.createResult(xhr.getResponseText());
-    console.log(entryContent);
-    var dom = /** @type {DocumentFragment} */ (goog.dom.htmlToDocumentFragment(entryContent));
-    console.log(dom);
+    var result = recite.source.oald.OaldApi.createResult(query, xhr.getResponseText());
+    callback(result);
   });
 };
 
@@ -46,15 +44,19 @@ recite.source.oald.OaldApi.prototype.search = function(query, callback) {
 /**
  * Create result.
  *
+ * @param {string} word
  * @param {string} htmlText html.
- * @return {*}
+ * @return {recite.search.SearchResult}
  */
-recite.source.oald.OaldApi.createResult = function(htmlText) {
+recite.source.oald.OaldApi.createResult = function(word, htmlText) {
   var start = '<div id="entryContent">';
   var end = '<!-- End of DIV entry-->';
   if (htmlText.indexOf(start) != -1) {
     var tmp = htmlText.substr(htmlText.indexOf(start) + start.length);
     var entryContent = tmp.substring(0, tmp.indexOf(end));
-    return recite.source.oald.OaldWordFactory.createWord(entryContent);
+    var w = recite.source.oald.OaldWordFactory.createWord(word, entryContent);
+    return new recite.search.SearchResult(w);
   }
+  // TODO(timgreen):
+  return null;
 };

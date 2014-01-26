@@ -27,10 +27,11 @@ recite.source.oald.OaldWordFactory.prototype.deserialize = function(word, conten
 /**
  * Create word.
  *
+ * @param {string} word
  * @param {string} htmlText html.
- * @return {*}
+ * @return {recite.source.oald.OaldWord}
  */
-recite.source.oald.OaldWordFactory.createWord = function(htmlText) {
+recite.source.oald.OaldWordFactory.createWord = function(word, htmlText) {
   var replaceImages = [
     {
       from: 'http://oald8.oxfordlearnersdictionaries.com/external/images/coresym.gif',
@@ -51,5 +52,5 @@ recite.source.oald.OaldWordFactory.createWord = function(htmlText) {
 
   console.log('xml', goog.dom.xml.loadXml(htmlText));
   // TODO(timgreen): new word
-  return htmlText;
+  return new recite.source.oald.OaldWord(word);
 };

@@ -15,3 +15,11 @@ recite.source.oald.OaldWord = function(word) {
   goog.base(this, recite.word.WordSource.google, word);
 };
 goog.inherits(recite.source.oald.OaldWord, recite.word.Word);
+
+
+/**
+ * @inheritDoc
+ */
+recite.source.oald.OaldWord.prototype.getData = function() {
+  return {};
+};

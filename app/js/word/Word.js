@@ -30,6 +30,14 @@ recite.word.Word.prototype.word;
 
 
 /**
+ * Get data for rendering.
+ *
+ * @return {Object} data for rendering.
+ */
+recite.word.Word.prototype.getData = goog.abstractMethod;
+
+
+/**
  * @protected
  * @return {string} serialized content.
  */

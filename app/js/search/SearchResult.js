@@ -1,18 +1,18 @@
 goog.provide('recite.search.SearchResult');
 
+goog.require('recite.word.Word');
+
 
 
 /**
  * @constructor
  *
- * @param {string} word
- * @param {string} type
- * @param {*} data
+ * @param {recite.word.Word} word
  */
-recite.search.SearchResult = function(word, type, data) {
-  this['word'] = word;
-  this['type'] = type;
-  this['data'] = data;
+recite.search.SearchResult = function(word) {
+  this['word'] = word.word;
+  this['type'] = word.source;
+  this['data'] = word.getData();
 };
 
 
@@ -33,8 +33,8 @@ recite.search.SearchResult.prototype.getType = function() {
 
 
 /**
- * @return {*}
+ * @return {Object}
  */
-recite.search.SearchResult.prototype.getDate = function() {
+recite.search.SearchResult.prototype.getData = function() {
   return this['data'];
 };
