@@ -12,7 +12,7 @@ goog.require('recite.word.WordSource');
  * @param {string} word
  */
 recite.source.oald.OaldWord = function(word) {
-  goog.base(this, recite.word.WordSource.google, word);
+  goog.base(this, recite.word.WordSource.oald, word);
 };
 goog.inherits(recite.source.oald.OaldWord, recite.word.Word);
 
@@ -21,5 +21,7 @@ goog.inherits(recite.source.oald.OaldWord, recite.word.Word);
  * @inheritDoc
  */
 recite.source.oald.OaldWord.prototype.getData = function() {
-  return {};
+  return {
+    'url': 'http://oald8.oxfordlearnersdictionaries.com/dictionary/' + this.word
+  };
 };

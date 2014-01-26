@@ -48,6 +48,8 @@ recite.angular.App.main = function() {
   recite.angular.App.registerDirective(module, 'word/gdict/primary-container', ['primary']);
   recite.angular.App.registerDirective(module, 'word/gdict/primary-related', ['primary']);
   recite.angular.App.registerDirective(module, 'word/gdict/term', ['term']);
+
+  recite.angular.App.registerDirective(module, 'word/oald/result', ['result']);
 };
 goog.exportSymbol('recite.angular.App.main', recite.angular.App.main);
 
