@@ -20,13 +20,13 @@ recite.word.Word = function(source, word) {
 /**
  * @type {recite.word.WordSource}
  */
-recite.word.Word.prototype.source = null;
+recite.word.Word.prototype.source;
 
 
 /**
  * @type {string}
  */
-recite.word.Word.prototype.word = null;
+recite.word.Word.prototype.word;
 
 
 /**

@@ -7,6 +7,7 @@ goog.require('goog.dom.xml');
 goog.require('goog.net.XhrIo');
 goog.require('recite.search.SearchApi');
 goog.require('recite.search.SearchResult');
+goog.require('recite.source.oald.OaldWordFactory');
 
 
 
@@ -54,37 +55,6 @@ recite.source.oald.OaldApi.createResult = function(htmlText) {
   if (htmlText.indexOf(start) != -1) {
     var tmp = htmlText.substr(htmlText.indexOf(start) + start.length);
     var entryContent = tmp.substring(0, tmp.indexOf(end));
-    return recite.source.oald.OaldApi.createWord(entryContent);
+    return recite.source.oald.OaldWordFactory.createWord(entryContent);
   }
-};
-
-
-/**
- * Create word.
- *
- * @param {string} htmlText html.
- * @return {*}
- */
-recite.source.oald.OaldApi.createWord = function(htmlText) {
-  var replaceImages = [
-    {
-      from: 'http://oald8.oxfordlearnersdictionaries.com/external/images/coresym.gif',
-      to: 'assets/images/oald/coresym.gif'
-    },
-    {
-      from: 'http://oald8.oxfordlearnersdictionaries.com/external/images/pron-uk.gif',
-      to: 'assets/images/oald/pron-uk.gif'
-    },
-    {
-      from: 'http://oald8.oxfordlearnersdictionaries.com/external/images/pron-us.gif',
-      to: 'assets/images/oald/pron-us.gif'
-    }
-  ];
-  replaceImages.forEach(function(replace) {
-    htmlText = htmlText.replace(new RegExp(replace.from, 'g'), replace.to);
-  });
-
-  console.log('xml', goog.dom.xml.loadXml(htmlText));
-  // TODO(timgreen): new word
-  return htmlText;
 };

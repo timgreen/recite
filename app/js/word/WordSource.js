@@ -4,7 +4,7 @@ goog.provide('recite.word.WordSource');
 /**
  * @enum {string}
  */
-rcite.word.WordSource = {
+recite.word.WordSource = {
   olad: 'olad',
   google: 'google'
 };
