@@ -1,44 +1,45 @@
+- function main() {
+.add-word
+  %input#add-word-input
+  %button#add-word-btn Add word
+
+.search-word(ng-controller="search.SearchCtrl")
+  %form(ng-submit="searchWord()")
+    %input(ng-model="searchWordInput" placeholder="word to search")
+    %input(type="submit" value="Search")
+  .result
+    %word-result(result="result" ng-if="result")
+    %pre
+      {{output}}
+-}
+
 !!! 5
+- if (isDevMode) {
+%html(ng-csp=true)
+  %head
+    %link(rel="stylesheet/less" type="text/css" href="assets/imports.less")
+    %script(src="assets/js/less/less-1.6.0.min.js")
+  %body
+    %button(onclick="less.refresh()") Refresh Less
+    - main()
+    -# scripts
+    %script(src="assets/js/dropbox-datastores-1.0-latest.js")
+    %script(src="assets/js/angular/angular.js")
+    %script(src="dev-closure.js")
+    %script(src="assets/js/goog/base.js")
+    %script(src="deps.js")
+    %script(src="dropbox-datastore-auth-fix.js")
+    %script(src="dev.js")
+- } else {
 %html(ng-app="recite" ng-csp=true)
   %head
-    - if (isDevMode) {
-    %link(rel="stylesheet/less" type="text/css" href="/assets/imports.less")
-    %script(src="/assets/js/less/less-1.6.0.min.js")
-    - } else {
-    %link(rel="stylesheet" type="text/css" href="/assets/compiled.css")
-    - }
+    %link(rel="stylesheet" type="text/css" href="assets/compiled.css")
   %body
-    - if (isDevMode) {
-    %button(onclick="less.refresh()") Refresh Less
-    - }
-
-    .add-word
-      %input#add-word-input
-      %button#add-word-btn Add word
-
-    .search-word(ng-controller="search.SearchCtrl")
-      %form(ng-submit="searchWord()")
-        %input(ng-model="searchWordInput" placeholder="word to search")
-        %input(type="submit" value="Search")
-      .result
-        %word-result(result="result" ng-if="result")
-        %pre
-          {{output}}
-
+    - main()
     -# scripts
-    - if (isDevMode) {
-    %script(src="https://www.dropbox.com/static/api/dropbox-datastores-1.0-latest.js")
-    %script(src="/assets/js/angular/angular.js")
-    %script(src="/assets/js/goog/base.js")
-    %script(src="/deps.js")
-    :javascript
-      goog.require('recite.angular.App');
-    :javascript
-      recite.angular.App.main();
-    - } else {
     %script(src="assets/js/dropbox-datastores-1.0-latest.js")
     %script(src="assets/js/angular.min.js")
     %script(src="assets/js/compiled.js")
     %script(src="dropbox-datastore-auth-fix.js")
     %script(src="main.js")
-    - }
+- }
